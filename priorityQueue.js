@@ -15,24 +15,20 @@ class PriorityQueue {
     this.nextOrder += 1;
   }
 
-  getIndex(options) {
-    if (!options) {
-      return -1;
-    }
-
+  getIndex(highest, lowest, oldest, newest) {
     if (this.items.length === 0) {
       return -1;
     }
 
-    if (options.oldest === true) {
+    if (oldest === true) {
       return 0;
     }
 
-    if (options.newest === true) {
+    if (newest === true) {
       return this.items.length - 1;
     }
 
-    if (options.highest === true) {
+    if (highest === true) {
       let best = 0;
 
       for (let i = 1; i < this.items.length; i++) {
@@ -44,7 +40,7 @@ class PriorityQueue {
       return best;
     }
 
-    if (options.lowest === true) {
+    if (lowest === true) {
       let best = 0;
 
       for (let i = 1; i < this.items.length; i++) {
@@ -59,8 +55,8 @@ class PriorityQueue {
     return -1;
   }
 
-  peek(options) {
-    const index = this.getIndex(options);
+  peek(highest, lowest, oldest, newest) {
+    const index = this.getIndex(highest, lowest, oldest, newest);
 
     if (index === -1) {
       return null;
@@ -69,8 +65,8 @@ class PriorityQueue {
     return this.items[index].item;
   }
 
-  dequeue(options) {
-    const index = this.getIndex(options);
+  dequeue(highest, lowest, oldest, newest) {
+    const index = this.getIndex(highest, lowest, oldest, newest);
 
     if (index === -1) {
       return null;
@@ -88,10 +84,10 @@ q.enqueue("banana", 5);
 q.enqueue("orange", 5);
 q.enqueue("kiwi", 1);
 
-console.log(q.peek({ highest: true }));
-console.log(q.peek({ lowest: true }));
-console.log(q.peek({ oldest: true }));
-console.log(q.peek({ newest: true }));
-console.log(q.dequeue({ highest: true }));
-console.log(q.dequeue({ oldest: true }));
-console.log(q.peek({ highest: true }));
+console.log(q.peek(true, false, false, false));
+console.log(q.peek(false, true, false, false));
+console.log(q.peek(false, false, true, false));
+console.log(q.peek(false, false, false, true));
+console.log(q.dequeue(true, false, false, false));
+console.log(q.dequeue(false, false, true, false));
+console.log(q.peek(true, false, false, false));
